@@ -73,7 +73,7 @@
 					mediaRecorder.stop();
 					mediaRecorder = null
 					VideoStream.getTracks().forEach((t) => t.stop())
-					audioStream.getTracks()[0].stop()
+					audioStream.getTracks()[0].stop()   
 					VideoStream = null
 
 					record = window.URL.createObjectURL(new Blob(chunks , { type : 'video/webm' }))
