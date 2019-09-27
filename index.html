@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>
+			Web
+		</title>
+		<style type="text/css">
+			
+		</style>
+
+	</head>
+	<body>
+		<h2>for VideoStream</h2>
+		<video id="video1" height="200" width="200"></video><br>
+		<h2>for recording</h2>
+		
+		<video  id="video2" height="200" width="200"></video>
+		<h2>download</h2>
+		<a id="link">download</a><br>
+		<button id="btn">played</button>
+		<script>
+			async function media () {
+				let chunks = []
+				let record = null
+
+				let v1 = document.querySelector('#video1')
+				let v2 = document.querySelector("#video2")
+				let down = document.querySelector("#link")
+				let btn = document.querySelector('#btn')
+				let p = false
+
+				
+
+				let VideoStream = await navigator.mediaDevices.getDisplayMedia({ video : true , audio : true})
+				
+				let audioStream = await navigator.mediaDevices.getUserMedia({ audio : true })
+				
+				let CombineStream = new MediaStream([ ...VideoStream.getTracks() , ...audioStream.getTracks() ])
+
+				// let mediaRecorder = new MediaRecorder(VideoStream, {mimeType: 'video/webm'});
+				let mediaRecorder = new MediaRecorder(CombineStream)
+
+				mediaRecorder.addEventListener('dataavailable', event => {
+					if (event.data && event.data.size > 0) {
+						if (p == true) {
+							//
+						}else {
+							chunks.push(event.data);
+						}
+						console.log(chunks)
+						
+					}
+				});
+				mediaRecorder.start(10)
+
+				console.log(mediaRecorder)
+				btn.addEventListener('click' , () => {
+					if (p == false) {
+						p = true
+						mediaRecorder.pause()
+						console.log('record paused')
+						
+						
+					}else {
+						p = false
+						mediaRecorder.resume()
+						console.log('record play')
+					}
+					
+				})
+				console.log(chunks)
+				// setInterval(() => console.log(chunks) , 1000)
+				VideoStream.addEventListener('inactive' , (e) => {
+					mediaRecorder.stop();
+					mediaRecorder = null
+					VideoStream.getTracks().forEach((t) => t.stop())
+					audioStream.getTracks().forEach((t) => t.stop())
+					VideoStream = null
+
+					record = window.URL.createObjectURL(new Blob(chunks , { type : 'video/webm' }))
+					down.href = record
+					down.download = 'myrecording.webm'
+				})
+			}
+		</script>
+	</body>
+</html>
