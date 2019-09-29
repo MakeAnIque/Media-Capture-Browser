@@ -336,7 +336,7 @@ class MediaCapture extends ImageOperation{
     imageBackups = [] //  for image writing changed in it
 
     DrawCanvas // draw canvas but not in used
-    DrawCtx // not in used canavs
+    DrawCtx // not in used canvas
     // filter color 
     filterColor = { // not use bu future 
         "black" : 255,
@@ -349,14 +349,14 @@ class MediaCapture extends ImageOperation{
     videoStream = null //  video stream
     audioStream = null // audio ...
     combineStream = null // both audio and video some time only video and audio 
-    mediaRecorder = null // media recoder 
+    mediaRecorder = null // media recorder 
     recordUrl = null // blob url 
     MediaCaptureName = null // 
     combineArray = [] //  used as combine stream 
     screenshot = null // screenshots
-    config // config this is not sstable
+    config // config this is not stable
     imageDatasB64 // store final image in base64 
-    filterImageArray = [] //  filter imaage but it us not stable use
+    filterImageArray = [] //  filter image but it us not stable use
     // video and audio configuration
     displayAudio = null 
     displayVideo = null
@@ -374,7 +374,7 @@ class MediaCapture extends ImageOperation{
         console.log(this.config.device_audio_capturing)
         
     }
-    /** this is for return to user not for interbal use 
+    /** this is for return to user not for internal use 
      *  GetVideoStream
      *  GetAudioStream
      *  GetCombineStream
@@ -390,7 +390,7 @@ class MediaCapture extends ImageOperation{
     }
      /**
      * function name - StartDisplayStream
-     * what - only for initilaze media capture api
+     * what - only for initialize media capture api
      * return - media with promise based
      */ 
     StartDisplayStream() {
@@ -398,7 +398,7 @@ class MediaCapture extends ImageOperation{
     }
      /**
      * function name - StartAudiioStream
-     * what - only for initilaze media capture api
+     * what - only for initialize media capture api
      * return - media with promise based
      */ 
     StartAudioStream() {
@@ -436,7 +436,7 @@ class MediaCapture extends ImageOperation{
         // getting stream video
         this.videoStream = await this.StartDisplayStream()
 
-        // combine in araru video stream
+        // combine in array video stream
         this.combineArray.push([ ...this.videoStream.getTracks() ])
 
         // call function
@@ -444,7 +444,7 @@ class MediaCapture extends ImageOperation{
     }
     /**
      * function name - RecordMicrphone 
-     * what - this is for only record mivrphone stteam video not mentioned
+     * what - this is for only record microphone stream video not mentioned
      */ 
     async RecordMircophone() {
         // getting stream 
@@ -453,7 +453,7 @@ class MediaCapture extends ImageOperation{
         // combine in array for because one stream for both so in array
         this.combineArray.push([ ...this.audioStream.getTracks() ])
 
-        // call strat record
+        // call start record
         this.StartRecord()
     }
     /**
@@ -464,7 +464,7 @@ class MediaCapture extends ImageOperation{
         // this mediaStream constructor combine audio and video stream data and make single stream
         this.combineStream = new MediaStream(this.combineArray[0])
 
-        // media recorder Constructor to recording fucntionlity
+        // media recorder Constructor to recording functionality
         this.mediaRecorder = new MediaRecorder(this.combineStream , { mimeType : 'video/webm' })
 
         // until the media recorder have data the it will send event
@@ -506,7 +506,7 @@ class MediaCapture extends ImageOperation{
         return { 'mimetype' : 'base64' , base64 : this.imageDatasB64 }
     }
     /**
-     * function name - PauseResume funciton
+     * function name - PauseResume function
      * what - Pause state and resume state for skip recording and play back recording
      * return - playback -true or false
      */ 
@@ -521,7 +521,7 @@ class MediaCapture extends ImageOperation{
         return this.playbackStatus
     }
     /**
-     * function name - Stoprecording 
+     * function name - StopRecording 
      * what - Stop the all stream like audio and video
      */ 
     StopRecording() {
@@ -558,7 +558,7 @@ class MediaCapture extends ImageOperation{
     }
     /**
      * function name - async ScreenShot(flag)
-     * what - for obatin base64 string from video stream
+     * what - for obtain base64 string from video stream
      * @params - flag = true or false - for checking videostream is for screenshot or live stream
      */ 
     async ScreenShot(flag = false) {
@@ -585,7 +585,7 @@ class MediaCapture extends ImageOperation{
             
         let ctx = can.getContext('2d')
         
-        // change the this.windowFullheight because it is fized on fixed screen change it ti adjustable  
+        // change the this.windowFullheight because it is fixed on fixed screen change it ti adjustable  
         ctx.drawImage(img , 0 , 0 , this.windowFullheight , 768)
 
         let base64ImageData = can.toDataURL('image/png' , 1)
@@ -617,7 +617,7 @@ class MediaCapture extends ImageOperation{
             const blobUrl = window.URL.createObjectURL(blob) // for blob url for link
 
             this.imageDatasB64 = null
-            return { 'mimeType' : 'image/png' , blob : blobUrl } // return bloob url
+            return { 'mimeType' : 'image/png' , blob : blobUrl } // return blob url
         }   
     }
     /**
