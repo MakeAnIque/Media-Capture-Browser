@@ -9,36 +9,107 @@
 
 	</head>
 	<body>
-		<h2>for VideoStream</h2>
-		<video id="video1" height="200" width="200"></video><br>
-		<h2>for recording</h2>
-		
-		<video id="video2" height="200" width="200"></video>
-		<h2>download</h2>
 		<a id="link">download</a><br>
 		<button id="btn">played</button>
 		<br>
 		<button onclick="media()">Start()</button>
+		<!-- <canvas id="can"></canvas> -->
+		<button onclick="viewImage()">viewImage</button>
+		<button onclick="capture()">Capture Image</button>
+
+		<button onclick="color()">colorChange</button>
+		<div id="onface" style="display: none">
+			<img id="im">
+		</div>
+		<canvas id="imageEdit"></canvas>
+		<canvas id="imagefinal"></canvas>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="main.js">
 			
 		</script>
+		
 		<script type="text/javascript">
-			class MyMedia extends MediaCapture {
-				constructor(config) {
-					super(config)
-				}
-			}
+			// class MyMedia extends MediaCapture {
+			// 	constructor(config) {
+			// 		super(config)
+			// 	}
+			// }
+			let g = document.getElementById('link')
+			let im = document.getElementById('im')
+			let f = document.getElementById('imageEdit')
+
+			let Orgimage = $("#im").get(0) 
+
+			let DrawCanvas =  document.getElementById('imageEdit')
+
+			let DrawCtx = DrawCanvas.getContext('2d')
+
+			DrawCanvas.height = Orgimage.height
+			DrawCanvas.width = Orgimage.width
+			
+			DrawCtx.drawImage(Orgimage , 0 , 0 , Orgimage.width , Orgimage.height)
+
 			let obj = {
 				device_audio_captring : true,
 				mircophone_capturing : true,
 				display_capturing : true,
 				playback_name : ""
 			}
-			let mediacustom = new MyMedia(obj)
+			
+			let mediacustom = new MediaCapture(obj)
+			
+			
+			let arr = []
+			function mousemove (e) {
+				// console.log(e.pageY - f.offsetTop ,e.pageX - f.offsetLeft)
+				let x = e.pageX - f.offsetLeft
+				let y = e.pageY - f.offsetTop
+				// console.log(mediacustom.DrawOnImage)
+				// console.log("yes")
+				// // mediacustom.DrawOnImage.push({ x , y })
+				// mediacustom.PlotingImage('#im' , x , y)
 
-			let g = document.getElementById('link')
-			
-			
+				// im.src = mediacustom.imageDatasB64
+				arr.push({ x , y })
+
+				if (arr.length > 1){
+					DrawCtx.moveTo(arr[0].x , arr[0].y)
+					DrawCtx.lineTo(arr[1].x , arr[1].y)
+					DrawCtx.closePath();
+					DrawCtx.stroke();
+					
+					let temp = arr.pop()
+					arr[0] = temp
+				}
+
+
+				
+			}
+			let DrawImageData = DrawCtx.getImageData(0 , 0 ,1366 , 768)
+        
+        	DrawCtx.putImageData(DrawImageData , 0 , 0)
+			function MouseDown(e) {
+				f.addEventListener('mousemove' , mousemove)
+			}
+			function mouseup() {
+				arr = []
+				f.removeEventListener('mousemove' , mousemove)
+			}
+			f.addEventListener('mousedown' , MouseDown)
+			f.addEventListener('mouseup' , mouseup)
+		
+			function capture() {
+				mediacustom.ScreenShot()
+				
+			}
+			function viewImage() {
+				im.src = mediacustom.imageDatasB64
+			}			
+			function color() {
+				mediacustom.FilterImage("#im" , "red")
+			}
+				
+			mediacustom = 
 		</script>
 	</body>
 </html>
