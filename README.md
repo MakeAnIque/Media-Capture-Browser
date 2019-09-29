@@ -58,31 +58,31 @@ MediaCapture is used for capturing media ( live stream ) that enable website to 
 	<script type = "text/javascript" src="./main.js"></script>
 		
 	<script type="text/javascript">
-		let  MediaCapture = new MediaCapture()
+		let  mediaCapture = new MediaCapture()
 		
-		MediaCapture.windowFullheight = window.innerHeight
-		MediaCapture.windowFullWidth  = window.innerWidth
+		mediaCapture.windowFullheight = window.innerHeight
+		mediaCapture.windowFullWidth  = window.innerWidth
 		
-		MediaCapture.setTextOnImage = 'Hello Media Capture'
+		mediaCapture.setTextOnImage = 'Hello Media Capture'
 	
 		let canElem = document.querySelector('#can')
 		
-		MediaCapture.CanvasElem = canElem
+		mediaCapture.CanvasElem = canElem
 				
 		// Recording Video and Audio
-		MediaCapture.GetAllWithMicrphoneStream()
+		mediaCapture.GetAllWithMicrphoneStream()
 		
 		// to stop 
-		MediaCapture.StopRecording()
+		mediaCapture.StopRecording()
 
 		// after stop recordBLob is objec { 'mimeType' : 'video/webm  , 'blob' : blob} like that
 		let recordBlob = MediaCapture.ConvertBlob() 
 			
 		// to Screen shot
 
-		MediaCapture.ScreenShot()
+		mediaCapture.ScreenShot()
 
-		let blobImage = MediaCapture.SaveScreenShot()		
+		let blobImage = mediaCapture.SaveScreenShot()		
 	</script> 
 	</body>
 
