@@ -49,4 +49,9 @@ MediaCapture is used for capturing media ( live stream ) that enable website to 
       - `color` like - `green` , `red` , `blue` , `green` , `yellow` in string
    - Add text in Image just `Double Click` image to add text on image
       - you have to set `setTextOnImage = 'your text' ` then double click
-   - then download image call `SaveScreenShot()
+   - then download image call `SaveScreenShot()`
+
+# Example
+    <code>
+        dvfslv    
+    </code>
