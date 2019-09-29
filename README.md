@@ -2,7 +2,9 @@
 
 MediaCapture is used for capturing media ( live stream ) that enable website to integrate its media capturing without any chrome extension and you can do more it.
 
-### Features
+## Features
+#first clone the repositori
+
   - Take Screenshots
   - Edit Screenshot like - Freehand Sketcha, Text Adding, Crop Image , Filter (Invert) color & Brightness
   - Display Record 
