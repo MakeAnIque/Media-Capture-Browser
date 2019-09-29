@@ -85,3 +85,6 @@ MediaCapture is used for capturing media ( live stream ) that enable website to 
 		let blobImage = MediaCapture.SaveScreenShot()		
 	</script>
 	</body>
+
+## More Information Visit Website
+<a href="https://testing.page.com">https://testing.page.com</a>
