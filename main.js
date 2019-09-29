@@ -6,17 +6,17 @@ class ImageOperation {
         
     }
     /**
-     * @function - for croping image for whre i want to cut 
+     * @function - for cropping image for where i want to cut 
      * @param {*} image  image if
      * @param {*} x1  start x
-     * @param {*} y1  strat y
+     * @param {*} y1  start y
      * @param {*} x2  end x
      * @param {*} y2 end y
      */
     CropImage(x1 , y1 , x2 , y2){
         // this.imageDatasB64 = null
 
-        // create anther beacuse for update image
+        // create anther because for update image
 
         let canvasUpdate = document.createElement('canvas')
 
@@ -82,14 +82,12 @@ class ImageOperation {
     }
     /**
      * @function FilterImage
-     * @wjhat - chage the color of image
+     * @what - change the color of image
      * @param {*} image for getting image id 
      * @param {*} color for color 
      * @param {*} brightness for hight light
      */
     FilterImage(image , color , bright = 1) {
-
-        // let Orgimage = $(image).get(0)
 
         let filterCanvas = document.createElement("canvas")
 
@@ -147,9 +145,9 @@ class ImageOperation {
     
      /**
      * function name - DrawFreeOnImage(image , imageEdit)
-     * what - this is for ploting image on dcoument and editing on image like draw handwriting free hand ect
+     * what - this is for plotting image on document and editing on image like draw handwriting free hand ect
      * @param - (image , imageEdit)
-     *        -  image is image sorce like img src 
+     *        -  image is image source like img src 
      *        -  imageEdit is for canvas data to writing and any change on it
      * return - promised based data
      */ 
@@ -158,10 +156,7 @@ class ImageOperation {
         // return promise to user handel self
         // return new Promise((resolve , reject) => {
             // it is for getting image data canvas  for adding EventListener
-            let f = document.getElementById("imageEdit")
-
-            // by jquery handle it to getting imageObject
-            // let Orgimage = $("#im").get(0) 
+            let f = document.getElementById("imageEdit") 
 
             // drawing on canvas image
 			let DrawCanvas =  document.getElementById('imageEdit')
@@ -188,13 +183,13 @@ class ImageOperation {
 
             DrawCanvas.renderImage(this.Base64ToBLob(this.imageDatasB64.split(',')[1] , 'image/png'))
             
-            let arr = [] // for handle mouse move and handsktech method x , y  coor dtore
+            let arr = [] // for handle mouse move and hand sketch method x , y  coordinates
             
-            // mousemove funtion 
+            // mousemove function 
 			function mousemove (e) {
 				
-				let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
-				let y = e.pageY - f.offsetTop // getting actual postion on canvas
+				let x = e.pageX - f.offsetLeft //  getting actual position on canvas
+				let y = e.pageY - f.offsetTop // getting actual position on canvas
             
                 // pushing x , y as object in arr 
 				arr.push({ x , y })
@@ -212,7 +207,7 @@ class ImageOperation {
                     
                     DrawCtx.stroke();
 					
-					let temp = arr.pop() // for every last elem set first in aarray
+					let temp = arr.pop() // for every last elem set first in array
 					arr[0] = temp
 				}
             }
@@ -228,7 +223,7 @@ class ImageOperation {
             }, false)
             // on mouse up 
             f.addEventListener('mouseup' , (e) => {
-                arr = [] // blankthe array
+                arr = [] // blank's array
                 
                 // convert current image data 
                 this.imageDatasB64 = DrawCanvas.toDataURL('image/png')   
@@ -242,19 +237,19 @@ class ImageOperation {
                  // getting image data 
 			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
-                // put image data on image documnet
+                // put image data on image document
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
 
                 
-                // remmoving dom event
+                // removing dom event
                 f.removeEventListener('mousemove' , mousemove)
                 
             })
             // this is for only expermental purpose
             f.addEventListener("dblclick" , (e) => {
                 console.log("hello")
-                let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
-                let y = e.pageY - f.offsetTop // getting actual postion on canvas
+                let x = e.pageX - f.offsetLeft //  getting actual position on canvas
+                let y = e.pageY - f.offsetTop // getting actual position on canvas
                 
                 let data = "okay" // this given by user
 
@@ -273,7 +268,7 @@ class ImageOperation {
                  // getting image data 
 			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
-                // put image data on image documnet
+                // put image data on image document
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
 
                 // this.InsertedText = ""
@@ -335,12 +330,12 @@ class ImageOperation {
 }
 
 class MediaCapture extends ImageOperation{
-    // for tesing
+    // for testing
     windowFullheight = 768
     windowFullWidth = 1366
     imageBackups = [] //  for image writing changed in it
 
-    DrawCanvas // draw canvas bu tnit in iused
+    DrawCanvas // draw canvas but not in used
     DrawCtx // not in used canavs
     // filter color 
     filterColor = { // not use bu future 
