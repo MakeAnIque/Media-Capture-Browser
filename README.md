@@ -1,1 +1,1 @@
-<h1>MediaCapture Library for JavaScript for Browser</h1>
+<h1>MediaCapture Library in JavaScript for Browser</h1>
