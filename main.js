@@ -164,13 +164,13 @@ class ImageOperation {
             // let Orgimage = $("#im").get(0) 
 
             // drawing on canvas image
-            let DrawCanvas =  document.getElementById('imageEdit')
+			let DrawCanvas =  document.getElementById('imageEdit')
 
-            let DrawCtx = DrawCanvas.getContext('2d')
+			let DrawCtx = DrawCanvas.getContext('2d')
 
-            DrawCanvas.height = this.windowFullheight
-            DrawCanvas.width = this.windowFullWidth
-            
+			DrawCanvas.height = this.windowFullheight
+			DrawCanvas.width = this.windowFullWidth
+			
             DrawCtx.drawImage(Orgimage , 0 , 0 , this.windowFullWidth , this.windowFullheight)
             
             HTMLCanvasElement.prototype.renderImage = (blob) => {
@@ -191,39 +191,39 @@ class ImageOperation {
             let arr = [] // for handle mouse move and handsktech method x , y  coor dtore
             
             // mousemove funtion 
-            function mousemove (e) {
-                
-                let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
-                let y = e.pageY - f.offsetTop // getting actual postion on canvas
+			function mousemove (e) {
+				
+				let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
+				let y = e.pageY - f.offsetTop // getting actual postion on canvas
             
                 // pushing x , y as object in arr 
-                arr.push({ x , y })
+				arr.push({ x , y })
 
                 // check arr len and all down function to draw pixel on image
-                if (arr.length > 1){
+				if (arr.length > 1){
                     DrawCtx.lineJoin = 'round'
                     DrawCtx.lineCap = 'round'
 
-                    DrawCtx.moveTo(arr[0].x , arr[0].y)
-                    DrawCtx.lineTo(arr[1].x , arr[1].y)
+					DrawCtx.moveTo(arr[0].x , arr[0].y)
+					DrawCtx.lineTo(arr[1].x , arr[1].y)
                     DrawCtx.closePath();
                     DrawCtx.strokeStyle = color;
                     DrawCtx.lineWidth = 5
                     
                     DrawCtx.stroke();
-                    
-                    let temp = arr.pop() // for every last elem set first in aarray
-                    arr[0] = temp
-                }
+					
+					let temp = arr.pop() // for every last elem set first in aarray
+					arr[0] = temp
+				}
             }
            
             
             // mouse Down then start mouse move
-            function MouseDown(e) {
-                f.addEventListener('mousemove' , mousemove)
+			function MouseDown(e) {
+				f.addEventListener('mousemove' , mousemove)
             }
             // f here is canvas because to set 
-            f.addEventListener('mousedown' , (e) => { 
+			f.addEventListener('mousedown' , (e) => { 
                 MouseDown(e)
             }, false)
             // on mouse up 
@@ -240,7 +240,7 @@ class ImageOperation {
                 this.imageBackups.push(this.imageDatasB64)
 
                  // getting image data 
-                let DrawImageData = DrawCtx.getImageData(0 , 0 ,1366 , 768)
+			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
                 // put image data on image documnet
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
@@ -271,7 +271,7 @@ class ImageOperation {
                 this.imageBackups.push(this.imageDatasB64)
 
                  // getting image data 
-                let DrawImageData = DrawCtx.getImageData(0 , 0 ,1366 , 768)
+			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
                 // put image data on image documnet
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
@@ -296,9 +296,9 @@ class ImageOperation {
 
         let DrawCtx = DrawCanvas.getContext('2d')
 
-            DrawCanvas.height = this.windowFullheight
-            DrawCanvas.width = this.windowFullWidth
-            
+			DrawCanvas.height = this.windowFullheight
+			DrawCanvas.width = this.windowFullWidth
+			
             DrawCtx.drawImage(Orgimage , 0 , 0 , this.windowFullWidth , this.windowFullheight)
             
             HTMLCanvasElement.prototype.renderImage = (blob) => {
@@ -507,8 +507,8 @@ class MediaCapture extends ImageOperation{
             })
         }
     }
-    MediaFile() {
-
+    Base64Image() {
+        return { 'mimetype' : 'base64' , base64 : this.imageDatasB64 }
     }
     /**
      * function name - PauseResume funciton
@@ -559,17 +559,18 @@ class MediaCapture extends ImageOperation{
      * return bloburl that is globally stored 
      */ 
     ConvertBlob() {
-        return this.recordUrl
+        return { 'mimeType' : 'video/webm' , blob :  this.recordUrl}
     }
     /**
      * function name - async ScreenShot(flag)
      * what - for obatin base64 string from video stream
      * @params - flag = true or false - for checking videostream is for screenshot or live stream
      */ 
-    async ScreenShot(flag) {
+    async ScreenShot(flag = false) {
         if (this.videoStream == null) {
             // for because if video stream is not running then run 
             this.videoStream = await this.StartDisplayStream()
+            flag = true
         }
             
         // get last video frame image
@@ -589,8 +590,8 @@ class MediaCapture extends ImageOperation{
             
         let ctx = can.getContext('2d')
         
-        // change the 1366 because it is fized on fixed screen change it ti adjustable  
-        ctx.drawImage(img , 0 , 0 , 1366 , 768)
+        // change the this.windowFullheight because it is fized on fixed screen change it ti adjustable  
+        ctx.drawImage(img , 0 , 0 , this.windowFullheight , 768)
 
         let base64ImageData = can.toDataURL('image/png' , 1)
             
@@ -621,7 +622,7 @@ class MediaCapture extends ImageOperation{
             const blobUrl = window.URL.createObjectURL(blob) // for blob url for link
 
             this.imageDatasB64 = null
-            return blobUrl // return bloob url
+            return { 'mimeType' : 'image/png' , blob : blobUrl } // return bloob url
         }   
     }
     /**
