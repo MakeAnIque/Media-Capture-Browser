@@ -6,17 +6,17 @@ class ImageOperation {
         
     }
     /**
-     * @function - for croping image for whre i want to cut 
+     * @function - for cropping image for where i want to cut 
      * @param {*} image  image if
      * @param {*} x1  start x
-     * @param {*} y1  strat y
+     * @param {*} y1  start y
      * @param {*} x2  end x
      * @param {*} y2 end y
      */
     CropImage(x1 , y1 , x2 , y2){
         // this.imageDatasB64 = null
 
-        // create anther beacuse for update image
+        // create anther because for update image
 
         let canvasUpdate = document.createElement('canvas')
 
@@ -82,14 +82,12 @@ class ImageOperation {
     }
     /**
      * @function FilterImage
-     * @wjhat - chage the color of image
+     * @what - change the color of image
      * @param {*} image for getting image id 
      * @param {*} color for color 
      * @param {*} brightness for hight light
      */
-    FilterImage(image , color , bright = 1) {
-
-        // let Orgimage = $(image).get(0)
+    FilterImage(color , bright = 1) {
 
         let filterCanvas = document.createElement("canvas")
 
@@ -147,9 +145,9 @@ class ImageOperation {
     
      /**
      * function name - DrawFreeOnImage(image , imageEdit)
-     * what - this is for ploting image on dcoument and editing on image like draw handwriting free hand ect
+     * what - this is for plotting image on document and editing on image like draw handwriting free hand ect
      * @param - (image , imageEdit)
-     *        -  image is image sorce like img src 
+     *        -  image is image source like img src 
      *        -  imageEdit is for canvas data to writing and any change on it
      * return - promised based data
      */ 
@@ -158,19 +156,16 @@ class ImageOperation {
         // return promise to user handel self
         // return new Promise((resolve , reject) => {
             // it is for getting image data canvas  for adding EventListener
-            let f = document.getElementById("imageEdit")
-
-            // by jquery handle it to getting imageObject
-            // let Orgimage = $("#im").get(0) 
+            let f = document.getElementById("imageEdit") 
 
             // drawing on canvas image
-            let DrawCanvas =  document.getElementById('imageEdit')
+			let DrawCanvas =  document.getElementById('imageEdit')
 
-            let DrawCtx = DrawCanvas.getContext('2d')
+			let DrawCtx = DrawCanvas.getContext('2d')
 
-            DrawCanvas.height = this.windowFullheight
-            DrawCanvas.width = this.windowFullWidth
-            
+			DrawCanvas.height = this.windowFullheight
+			DrawCanvas.width = this.windowFullWidth
+			
             DrawCtx.drawImage(Orgimage , 0 , 0 , this.windowFullWidth , this.windowFullheight)
             
             HTMLCanvasElement.prototype.renderImage = (blob) => {
@@ -188,47 +183,47 @@ class ImageOperation {
 
             DrawCanvas.renderImage(this.Base64ToBLob(this.imageDatasB64.split(',')[1] , 'image/png'))
             
-            let arr = [] // for handle mouse move and handsktech method x , y  coor dtore
+            let arr = [] // for handle mouse move and hand sketch method x , y  coordinates
             
-            // mousemove funtion 
-            function mousemove (e) {
-                
-                let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
-                let y = e.pageY - f.offsetTop // getting actual postion on canvas
+            // mousemove function 
+			function mousemove (e) {
+				
+				let x = e.pageX - f.offsetLeft //  getting actual position on canvas
+				let y = e.pageY - f.offsetTop // getting actual position on canvas
             
                 // pushing x , y as object in arr 
-                arr.push({ x , y })
+				arr.push({ x , y })
 
                 // check arr len and all down function to draw pixel on image
-                if (arr.length > 1){
+				if (arr.length > 1){
                     DrawCtx.lineJoin = 'round'
                     DrawCtx.lineCap = 'round'
 
-                    DrawCtx.moveTo(arr[0].x , arr[0].y)
-                    DrawCtx.lineTo(arr[1].x , arr[1].y)
+					DrawCtx.moveTo(arr[0].x , arr[0].y)
+					DrawCtx.lineTo(arr[1].x , arr[1].y)
                     DrawCtx.closePath();
                     DrawCtx.strokeStyle = color;
                     DrawCtx.lineWidth = 5
                     
                     DrawCtx.stroke();
-                    
-                    let temp = arr.pop() // for every last elem set first in aarray
-                    arr[0] = temp
-                }
+					
+					let temp = arr.pop() // for every last elem set first in array
+					arr[0] = temp
+				}
             }
            
             
             // mouse Down then start mouse move
-            function MouseDown(e) {
-                f.addEventListener('mousemove' , mousemove)
+			function MouseDown(e) {
+				f.addEventListener('mousemove' , mousemove)
             }
             // f here is canvas because to set 
-            f.addEventListener('mousedown' , (e) => { 
+			f.addEventListener('mousedown' , (e) => { 
                 MouseDown(e)
             }, false)
             // on mouse up 
             f.addEventListener('mouseup' , (e) => {
-                arr = [] // blankthe array
+                arr = [] // blank's array
                 
                 // convert current image data 
                 this.imageDatasB64 = DrawCanvas.toDataURL('image/png')   
@@ -240,23 +235,23 @@ class ImageOperation {
                 this.imageBackups.push(this.imageDatasB64)
 
                  // getting image data 
-                let DrawImageData = DrawCtx.getImageData(0 , 0 ,1366 , 768)
+			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
-                // put image data on image documnet
+                // put image data on image document
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
 
                 
-                // remmoving dom event
+                // removing dom event
                 f.removeEventListener('mousemove' , mousemove)
                 
             })
             // this is for only expermental purpose
             f.addEventListener("dblclick" , (e) => {
                 console.log("hello")
-                let x = e.pageX - f.offsetLeft //  getting actual postion on canvas
-                let y = e.pageY - f.offsetTop // getting actual postion on canvas
+                let x = e.pageX - f.offsetLeft //  getting actual position on canvas
+                let y = e.pageY - f.offsetTop // getting actual position on canvas
                 
-                let data = "okay" // this given by user
+                let data = this.setTextOnImage // this given by user
 
                 DrawCtx.font = "30px Verdana"
 
@@ -271,9 +266,9 @@ class ImageOperation {
                 this.imageBackups.push(this.imageDatasB64)
 
                  // getting image data 
-                let DrawImageData = DrawCtx.getImageData(0 , 0 ,1366 , 768)
+			    let DrawImageData = DrawCtx.getImageData(0 , 0 ,this.windowFullWidth , this.windowFullheight)
         
-                // put image data on image documnet
+                // put image data on image document
                 DrawCtx.putImageData(DrawImageData , 0 , 0)
 
                 // this.InsertedText = ""
@@ -292,13 +287,13 @@ class ImageOperation {
      * 
      */
     updateImage() {
-        let DrawCanvas =  document.getElementById('imageEdit')
+        let DrawCanvas =  document.getElementById(this.CanvasElem)
 
         let DrawCtx = DrawCanvas.getContext('2d')
 
-            DrawCanvas.height = this.windowFullheight
-            DrawCanvas.width = this.windowFullWidth
-            
+			DrawCanvas.height = this.windowFullheight
+			DrawCanvas.width = this.windowFullWidth
+			
             DrawCtx.drawImage(Orgimage , 0 , 0 , this.windowFullWidth , this.windowFullheight)
             
             HTMLCanvasElement.prototype.renderImage = (blob) => {
@@ -335,13 +330,13 @@ class ImageOperation {
 }
 
 class MediaCapture extends ImageOperation{
-    // for tesing
+    // for testing
     windowFullheight = 768
     windowFullWidth = 1366
     imageBackups = [] //  for image writing changed in it
 
-    DrawCanvas // draw canvas bu tnit in iused
-    DrawCtx // not in used canavs
+    DrawCanvas // draw canvas but not in used
+    DrawCtx // not in used canvas
     // filter color 
     filterColor = { // not use bu future 
         "black" : 255,
@@ -354,18 +349,20 @@ class MediaCapture extends ImageOperation{
     videoStream = null //  video stream
     audioStream = null // audio ...
     combineStream = null // both audio and video some time only video and audio 
-    mediaRecorder = null // media recoder 
+    mediaRecorder = null // media recorder 
     recordUrl = null // blob url 
     MediaCaptureName = null // 
     combineArray = [] //  used as combine stream 
     screenshot = null // screenshots
-    config // config this is not sstable
+    config // config this is not stable
     imageDatasB64 // store final image in base64 
-    filterImageArray = [] //  filter imaage but it us not stable use
+    filterImageArray = [] //  filter image but it us not stable use
+    setTextOnImage = '' // for setting text on image
     // video and audio configuration
     displayAudio = null 
     displayVideo = null
     microphone = null
+    CanvasElem
     // handle pause , resume
     playbackStatus = false // true pause .. false resume
 
@@ -379,7 +376,7 @@ class MediaCapture extends ImageOperation{
         console.log(this.config.device_audio_capturing)
         
     }
-    /** this is for return to user not for interbal use 
+    /** this is for return to user not for internal use 
      *  GetVideoStream
      *  GetAudioStream
      *  GetCombineStream
@@ -395,7 +392,7 @@ class MediaCapture extends ImageOperation{
     }
      /**
      * function name - StartDisplayStream
-     * what - only for initilaze media capture api
+     * what - only for initialize media capture api
      * return - media with promise based
      */ 
     StartDisplayStream() {
@@ -403,7 +400,7 @@ class MediaCapture extends ImageOperation{
     }
      /**
      * function name - StartAudiioStream
-     * what - only for initilaze media capture api
+     * what - only for initialize media capture api
      * return - media with promise based
      */ 
     StartAudioStream() {
@@ -441,7 +438,7 @@ class MediaCapture extends ImageOperation{
         // getting stream video
         this.videoStream = await this.StartDisplayStream()
 
-        // combine in araru video stream
+        // combine in array video stream
         this.combineArray.push([ ...this.videoStream.getTracks() ])
 
         // call function
@@ -449,7 +446,7 @@ class MediaCapture extends ImageOperation{
     }
     /**
      * function name - RecordMicrphone 
-     * what - this is for only record mivrphone stteam video not mentioned
+     * what - this is for only record microphone stream video not mentioned
      */ 
     async RecordMircophone() {
         // getting stream 
@@ -458,7 +455,7 @@ class MediaCapture extends ImageOperation{
         // combine in array for because one stream for both so in array
         this.combineArray.push([ ...this.audioStream.getTracks() ])
 
-        // call strat record
+        // call start record
         this.StartRecord()
     }
     /**
@@ -469,7 +466,7 @@ class MediaCapture extends ImageOperation{
         // this mediaStream constructor combine audio and video stream data and make single stream
         this.combineStream = new MediaStream(this.combineArray[0])
 
-        // media recorder Constructor to recording fucntionlity
+        // media recorder Constructor to recording functionality
         this.mediaRecorder = new MediaRecorder(this.combineStream , { mimeType : 'video/webm' })
 
         // until the media recorder have data the it will send event
@@ -507,11 +504,11 @@ class MediaCapture extends ImageOperation{
             })
         }
     }
-    MediaFile() {
-
+    Base64Image() {
+        return { 'mimetype' : 'base64' , base64 : this.imageDatasB64 }
     }
     /**
-     * function name - PauseResume funciton
+     * function name - PauseResume function
      * what - Pause state and resume state for skip recording and play back recording
      * return - playback -true or false
      */ 
@@ -526,7 +523,7 @@ class MediaCapture extends ImageOperation{
         return this.playbackStatus
     }
     /**
-     * function name - Stoprecording 
+     * function name - StopRecording 
      * what - Stop the all stream like audio and video
      */ 
     StopRecording() {
@@ -559,17 +556,18 @@ class MediaCapture extends ImageOperation{
      * return bloburl that is globally stored 
      */ 
     ConvertBlob() {
-        return this.recordUrl
+        return { 'mimeType' : 'video/webm' , blob :  this.recordUrl}
     }
     /**
      * function name - async ScreenShot(flag)
-     * what - for obatin base64 string from video stream
+     * what - for obtain base64 string from video stream
      * @params - flag = true or false - for checking videostream is for screenshot or live stream
      */ 
-    async ScreenShot(flag) {
+    async ScreenShot(flag = false) {
         if (this.videoStream == null) {
             // for because if video stream is not running then run 
             this.videoStream = await this.StartDisplayStream()
+            flag = true
         }
             
         // get last video frame image
@@ -589,8 +587,8 @@ class MediaCapture extends ImageOperation{
             
         let ctx = can.getContext('2d')
         
-        // change the 1366 because it is fized on fixed screen change it ti adjustable  
-        ctx.drawImage(img , 0 , 0 , 1366 , 768)
+        // change the this.windowFullheight because it is fixed on fixed screen change it ti adjustable  
+        ctx.drawImage(img , 0 , 0 , this.windowFullheight , 768)
 
         let base64ImageData = can.toDataURL('image/png' , 1)
             
@@ -621,7 +619,7 @@ class MediaCapture extends ImageOperation{
             const blobUrl = window.URL.createObjectURL(blob) // for blob url for link
 
             this.imageDatasB64 = null
-            return blobUrl // return bloob url
+            return { 'mimeType' : 'image/png' , blob : blobUrl } // return blob url
         }   
     }
     /**
