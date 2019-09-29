@@ -287,7 +287,7 @@ class ImageOperation {
      * 
      */
     updateImage() {
-        let DrawCanvas =  document.getElementById('imageEdit')
+        let DrawCanvas =  document.getElementById(this.CanvasElem)
 
         let DrawCtx = DrawCanvas.getContext('2d')
 
@@ -362,6 +362,7 @@ class MediaCapture extends ImageOperation{
     displayAudio = null 
     displayVideo = null
     microphone = null
+    CanvasElem
     // handle pause , resume
     playbackStatus = false // true pause .. false resume
 

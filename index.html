@@ -118,3 +118,43 @@
 		</script>
 	</body>
 </html>
+
+<html>
+	<head>
+		<title>hello</title>
+	</head>
+	<body>
+			<canvas id = 'can'></canvas>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script type = "text/javascript" src="./main.js"></script>
+		
+			<script type="text/javascript">
+				let  MediaCapture = new MediaCapture()
+		
+				MediaCapture.windowFullheight = window.innerHeight
+				MediaCapture.windowFullWidth  = window.innerWidth
+		
+				MediaCapture.setTextOnImage = 'Hello Media Capture'
+		
+				let canElem = document.querySelector('#can')
+		
+				MediaCapture.CanvasElem = canElem
+				/*
+					Recording Video and Audio
+				*/
+		
+				MediaCapture.GetAllWithMicrphoneStream()
+		
+				// to stop 
+
+				MediaCapture.StopRecording()
+
+				// after stop 
+				let recordBlob = MediaCapture.ConvertBlob()
+				// recoding audio
+
+			
+		
+			</script>
+		</body>
+</html>

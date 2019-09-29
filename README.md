@@ -52,6 +52,36 @@ MediaCapture is used for capturing media ( live stream ) that enable website to 
    - then download image call `SaveScreenShot()`
 
 # Example
-    <code>
-        dvfslv    
-    </code>
+    <body>
+		<canvas id = 'can'></canvas>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type = "text/javascript" src="./main.js"></script>
+		
+		<script type="text/javascript">
+			let  MediaCapture = new MediaCapture()
+		
+			MediaCapture.windowFullheight = window.innerHeight
+			MediaCapture.windowFullWidth  = window.innerWidth
+		
+			MediaCapture.setTextOnImage = 'Hello Media Capture'
+		
+			let canElem = document.querySelector('#can')
+		
+			MediaCapture.CanvasElem = canElem
+				
+			// Recording Video and Audio
+			MediaCapture.GetAllWithMicrphoneStream()
+		
+			// to stop 
+			MediaCapture.StopRecording()
+
+			// after stop recordBLob is objec { 'mimeType' : 'video/webm  , 'blob' : blob} like that
+			let recordBlob = MediaCapture.ConvertBlob() 
+				
+    		// to Screen shot
+
+			MediaCapture.ScreenShot()
+
+			let blobImage = MediaCapture.SaveScreenShot()		
+		</script>
+	</body>
