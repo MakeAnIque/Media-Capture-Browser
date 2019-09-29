@@ -22,7 +22,11 @@
 			<img id="im">
 		</div>
 		<canvas id="imageEdit"></canvas>
-		<canvas id="imagefinal"></canvas>
+		<canvas id="imagefinal"></canvas><br>
+		<h2>only for test</h2>
+		<button id="test">click to blob</button>
+		<br>
+		<canvas id="testcan"></canvas>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="main.js">
 			
@@ -99,7 +103,7 @@
 			f.addEventListener('mouseup' , mouseup)
 		
 			function capture() {
-				mediacustom.ScreenShot()
+				mediacustom.ScreenShot(true)
 				
 			}
 			function viewImage() {
@@ -108,8 +112,7 @@
 			function color() {
 				mediacustom.FilterImage("#im" , "red")
 			}
-				
-			mediacustom = 
+			
 		</script>
 	</body>
 </html>
