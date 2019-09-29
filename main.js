@@ -87,7 +87,7 @@ class ImageOperation {
      * @param {*} color for color 
      * @param {*} brightness for hight light
      */
-    FilterImage(image , color , bright = 1) {
+    FilterImage(color , bright = 1) {
 
         let filterCanvas = document.createElement("canvas")
 
@@ -251,7 +251,7 @@ class ImageOperation {
                 let x = e.pageX - f.offsetLeft //  getting actual position on canvas
                 let y = e.pageY - f.offsetTop // getting actual position on canvas
                 
-                let data = "okay" // this given by user
+                let data = this.setTextOnImage // this given by user
 
                 DrawCtx.font = "30px Verdana"
 
@@ -357,6 +357,7 @@ class MediaCapture extends ImageOperation{
     config // config this is not stable
     imageDatasB64 // store final image in base64 
     filterImageArray = [] //  filter image but it us not stable use
+    setTextOnImage = '' // for setting text on image
     // video and audio configuration
     displayAudio = null 
     displayVideo = null
