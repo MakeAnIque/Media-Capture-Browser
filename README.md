@@ -83,7 +83,7 @@ MediaCapture is used for capturing media ( live stream ) that enable website to 
 		MediaCapture.ScreenShot()
 
 		let blobImage = MediaCapture.SaveScreenShot()		
-	</script>
+	</script> 
 	</body>
 
 ## More Information Visit Website
